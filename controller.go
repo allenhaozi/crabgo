@@ -44,3 +44,7 @@ func (self *Controller) GetParam(key string) string {
 func (self *Controller) GetAllParam() map[string]string {
 	return self.RetParam
 }
+
+func (self *Controller) SetAllParam(param map[string]string) {
+	self.RetParam = param
+}
