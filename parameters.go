@@ -24,6 +24,9 @@ func (self *CrabParameter) ParseParameter(req *http.Request) {
 
 func parseGetData(rawQuery string) map[string]string {
 	data := make(map[string]string)
+	if len(rawQuery) <= 0 {
+		return data
+	}
 	sliceQuery := strings.Split(rawQuery, paramSplitFlag)
 	for _, value := range sliceQuery {
 		sliceValue := strings.Split(value, querySplitFlag)
@@ -37,9 +40,11 @@ func parseGetData(rawQuery string) map[string]string {
 func parsePostData(req *http.Request) map[string]string {
 	data := make(map[string]string)
 	err := req.ParseForm()
-	Dump(err)
 	if err == nil {
-		Dump(err)
+		form := req.Form
+		for k, v := range form {
+			data[k] = v[0]
+		}
 	}
 	return data
 }

@@ -3,6 +3,7 @@ package crabgo
 import (
 	"github.com/Allenhaozi/crabgo/utils"
 	"net/http"
+	"reflect"
 	"strings"
 )
 
@@ -23,33 +24,57 @@ const (
 )
 
 type CrabDispatcher struct {
-	ContrllerNameKey string
-	ActionName       string
+	ControllerNameKey string
+	ActionName        string
 }
 
-func (self *CrabDispatcher) Dispatch(req *http.Request) {
-	var ctrl string
-	var action string
+func (self *CrabDispatcher) Dispatch(rw http.ResponseWriter, req *http.Request) {
+	ctrlNameKey, actionName := getCtrlAndAction(req)
+	//this is the controller map key , this map is in routers.go
+	self.ControllerNameKey = ctrlNameKey
+	// first character upper
+	self.ActionName = actionName
+
+	// parse request parameter
+	parameter := new(CrabParameter)
+	parameter.ParseParameter(req)
+	//execute requst by the relevant controller and action
+	if controller, ok := RouterList[ctrlNameKey]; ok {
+		//initialize controller data
+		controller.Init(rw, req)
+		//inject request parameter to controller struct
+		for k, v := range parameter.RetParams {
+			controller.SetParam(k, v)
+		}
+		value := reflect.ValueOf(controller)
+		//execute controller action(a function)
+		value.MethodByName(actionName).Call(nil)
+	} else {
+		panic(ErrNotFound)
+	}
+}
+
+func getCtrlAndAction(req *http.Request) (ctrlNameKey string, actionName string) {
 	uri := req.URL.Path
 	//todo sepcial characters process
 	slicePath := strings.Split(uri, "/")
 	if len(slicePath) > uriLayerNum {
-		ctrl = slicePath[1]
-		action = slicePath[2]
+		ctrlNameKey = slicePath[1]
+		actionName = slicePath[2]
 	} else if len(slicePath) == 2 {
-		ctrl = slicePath[1]
-		action = defAction
+		ctrlNameKey = slicePath[1]
+		actionName = defAction
 	} else {
-		ctrl = defAction
-		action = defAction
+		ctrlNameKey = defAction
+		actionName = defAction
 	}
 
 	//ensure string is lowercase
-	ctrl = strings.ToLower(ctrl)
-	action = strings.ToLower(action)
-
 	//this is the controller map key , this map is in routers.go
-	self.ContrllerNameKey = ctrl
+	ctrlNameKey = strings.ToLower(ctrlNameKey)
 	// first character upper
-	self.ActionName = utils.UcFirst(action) + actionSuffix
+	actionName = strings.ToLower(actionName)
+	actionName = utils.UcFirst(strings.ToLower(actionName)) + actionSuffix
+
+	return
 }
