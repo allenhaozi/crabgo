@@ -5,4 +5,5 @@ import (
 )
 
 var ErrInvalidParam error = errors.New("invalid parameter")
-var ErrNotFound error = errors.New("controller not found")
+var ErrNotFoundCtrl error = errors.New("controller not found")
+var ErrNotFoundAction error = errors.New("aciton not found")

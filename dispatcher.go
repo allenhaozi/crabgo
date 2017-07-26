@@ -3,7 +3,6 @@ package crabgo
 import (
 	"github.com/Allenhaozi/crabgo/utils"
 	"net/http"
-	"reflect"
 	"strings"
 )
 
@@ -23,35 +22,26 @@ const (
 	ctrlSuffix string = "Controller"
 )
 
-type CrabDispatcher struct {
+var (
+	CrabDispatcher *Dispatcher
+)
+
+type Dispatcher struct {
 	ControllerNameKey string
 	ActionName        string
 }
 
-func (self *CrabDispatcher) Dispatch(rw http.ResponseWriter, req *http.Request) {
+func NewCrabDispatcher() *Dispatcher {
+	return new(Dispatcher)
+}
+
+func (self *Dispatcher) Dispatch(rw http.ResponseWriter, req *http.Request) {
 	ctrlNameKey, actionName := getCtrlAndAction(req)
 	//this is the controller map key , this map is in routers.go
 	self.ControllerNameKey = ctrlNameKey
 	// first character upper
 	self.ActionName = actionName
 
-	// parse request parameter
-	parameter := new(CrabParameter)
-	parameter.ParseParameter(req)
-	//execute requst by the relevant controller and action
-	if controller, ok := RouterList[ctrlNameKey]; ok {
-		//initialize controller data
-		controller.Init(rw, req)
-		//inject request parameter to controller struct
-		for k, v := range parameter.RetParams {
-			controller.SetParam(k, v)
-		}
-		value := reflect.ValueOf(controller)
-		//execute controller action(a function)
-		value.MethodByName(actionName).Call(nil)
-	} else {
-		panic(ErrNotFound)
-	}
 }
 
 func getCtrlAndAction(req *http.Request) (ctrlNameKey string, actionName string) {

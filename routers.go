@@ -1,13 +1,11 @@
 package crabgo
 
-var RouterList map[string]ControllerInterface
-
-func init() {
-	RouterList = make(map[string]ControllerInterface)
+type CrabRouter struct {
+	RouterList map[string]ControllerInterface
 }
 
-func Router(key string, ctrl ControllerInterface) {
-	if _, ok := RouterList[key]; !ok {
-		RouterList[key] = ctrl
+func (self *CrabRouter) AddRouter(ctrlNameKey string, ctrl ControllerInterface) {
+	if _, ok := self.RouterList[ctrlNameKey]; !ok {
+		self.RouterList[ctrlNameKey] = ctrl
 	}
 }

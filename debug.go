@@ -1,13 +1,12 @@
 package crabgo
 
 import (
-	"fmt"
-	"reflect"
+	"log"
+	"os"
 )
 
+var CrabLogger = log.New(os.Stdout, "", log.Ldate|log.Ltime)
+
 func Dump(i interface{}) {
-	fmt.Println("-----------------begin--------------------")
-	fmt.Println(reflect.TypeOf(i))
-	fmt.Println(i)
-	fmt.Println("-----------------end----------------------")
+	CrabLogger.Printf("[D] %v \n", i)
 }
