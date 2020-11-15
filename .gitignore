@@ -1,0 +1,12 @@
+tmp/
+release/
+cmd/cmd
+cmd/start.sh
+
+*.swp
+*.swap
+*.test
+*.log
+
+.idea/
+cover.out
