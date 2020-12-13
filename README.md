@@ -13,6 +13,9 @@ We can also incorporate some accumulated experience into this framework, and abs
 
 Avoid building wheels repeatedly  
 
+The purpose of this framework is to give you the last mile of effective advice for creating a PaaS service management   
+
+More often, you want it to be a methodology that includes design patterns    
 
 ### License
 [MIT](https://github.com/allenhaozi/crabgo/blob/master/LICENSE)
