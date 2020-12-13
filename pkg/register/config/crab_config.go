@@ -2,7 +2,6 @@ package config
 
 import (
 	"os"
-	"strings"
 	"time"
 
 	"github.com/pkg/errors"
@@ -19,18 +18,17 @@ var (
 	defRSAKeyDir                     = "/home/work/etc"
 )
 
-type Sage struct {
-	SageNamespace          string
-	CommonConfigFileServer string
+type Crab struct {
+	Namespace string
 }
 
-type SageConfig struct {
-	Sage
-	SageGateWay               string
-	SageRegistryAddr          string
+type CrabConfig struct {
+	Crab
+	CrabGateWay               string
+	CrabRegistryAddr          string
 	ConfigCenterAddr          string
 	KeyStoneAddr              string
-	SageLicenseAddr           string
+	CrabLicenseAddr           string
 	WebServerPort             string
 	StorageBasePath           string
 	LogLevel                  log.Level
@@ -39,9 +37,9 @@ type SageConfig struct {
 	RSAKeyDir                 string
 }
 
-func GetSageConfig() (*SageConfig, error) {
+func GetCrabConfig() (*CrabConfig, error) {
 
-	cfg := &SageConfig{}
+	cfg := &CrabConfig{}
 	err := cfg.initByEnv()
 	if err != nil {
 		return nil, errors.Wrap(err, "init config by env failed")
@@ -49,17 +47,12 @@ func GetSageConfig() (*SageConfig, error) {
 	return cfg, nil
 }
 
-func (cfg *SageConfig) initByEnv() error {
-	if gw, ok := os.LookupEnv("SAGE_GATEWAY"); ok {
-		// TODO regular ?
-		if !strings.HasPrefix(gw, httpPrefix) {
-			gw = httpPrefix + gw
-		}
-		cfg.SageGateWay = gw
+func (cfg *CrabConfig) initByEnv() error {
+	if port, ok := os.LookupEnv("WEB_SERVER_PORT"); ok {
+		cfg.WebServerPort = port
 	} else {
-		cfg.SageGateWay = defaultGateWay
+		cfg.CrabGateWay = defaultGateWay
 	}
-
 
 	return nil
 }

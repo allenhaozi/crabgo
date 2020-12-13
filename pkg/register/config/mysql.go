@@ -12,7 +12,7 @@ var (
 	dbName   = "app-manager"
 )
 
-type SageMysqlConfig struct {
+type CrabMysqlConfig struct {
 	User       string
 	Host       string
 	PassWord   string
@@ -26,11 +26,11 @@ type SageMysqlConfig struct {
 var connFormat = "%s:%s@tcp(%s:%s)/%s?%s"
 var connParamsFormat = "charset=utf8&parseTime=True&loc=%s"
 
-func GetMysqlConfig() (*SageMysqlConfig, error) {
+func GetMysqlConfig() (*CrabMysqlConfig, error) {
 	if true {
-		return nil,nil
+		return nil, nil
 	}
-	var cfg SageMysqlConfig
+	var cfg CrabMysqlConfig
 	if h, ok := os.LookupEnv("DB_HOST"); ok {
 		cfg.Host = h
 	} else {
@@ -70,7 +70,7 @@ func GetMysqlConfig() (*SageMysqlConfig, error) {
 	return &cfg, nil
 }
 
-func (smc *SageMysqlConfig) GetConnString() string {
+func (smc *CrabMysqlConfig) GetConnString() string {
 	return fmt.Sprintf(
 		connFormat,
 		smc.User,

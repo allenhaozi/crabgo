@@ -4,25 +4,25 @@ import (
 	"net/http"
 )
 
-type SageResponseIf interface {
+type CrabResponseIf interface {
 	SetData(code int, dataList ...interface{})
 }
 
-type SageResponse struct {
+type CrabResponse struct {
 	HttpCode int         `json:"-"`
 	Msg      string      `json:"msg"`
 	Status   string      `json:"status"`
 	Data     interface{} `json:"data"`
 }
 
-func NewSageResponse() *SageResponse {
-	return &SageResponse{
+func NewCrabResponse() *CrabResponse {
+	return &CrabResponse{
 		HttpCode: http.StatusOK,
 	}
 }
 
 //implement interface ProphetResponseInf
-func (sr *SageResponse) SetData(code int, dataList ...interface{}) {
+func (sr *CrabResponse) SetData(code int, dataList ...interface{}) {
 	sr.HttpCode = code
 	if len(dataList) >= 1 {
 		sr.Msg = "success"

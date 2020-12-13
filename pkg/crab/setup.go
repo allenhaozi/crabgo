@@ -2,7 +2,7 @@
 services controller restful api
 http handler register
 */
-package sage
+package crab
 
 import (
 	"net/http"
@@ -12,8 +12,8 @@ import (
 	"github.com/pkg/errors"
 
 	"github.com/allenhaozi/crabgo/pkg/apis/common"
+	"github.com/allenhaozi/crabgo/pkg/crab/restfulapi"
 	sageruntime "github.com/allenhaozi/crabgo/pkg/register/runtime"
-	"github.com/allenhaozi/crabgo/pkg/sage/restfulapi"
 
 	"github.com/labstack/echo/v4"
 	alog "github.com/sirupsen/logrus"
@@ -26,12 +26,13 @@ func Setup(cfg *register.Config) map[sageruntime.GroupVersion][]common.RestfulAp
 
 	var restfulMods sync.Map
 
+	// TODO auto register scheme group version
 	list := map[sageruntime.GroupVersion][]common.RestfulApiMeta{
 		sagecorev1.SchemeGroupVersion: []common.RestfulApiMeta{},
 	}
 
 	for _, setup := range []func(cfg *register.Config, carrier *sync.Map) (string, []common.RestfulApiMeta){
-		restfulapi.SetupAppMeta,
+		restfulapi.SetupAppDoc,
 	} {
 		modKey, modApiList := setup(cfg, &restfulMods)
 
@@ -49,7 +50,7 @@ func Setup(cfg *register.Config) map[sageruntime.GroupVersion][]common.RestfulAp
 func patchHandlerFunc(ctrl interface{}, meta *common.RestfulApiMeta) *common.RestfulApiMeta {
 
 	meta.HandlerFunc = func(e echo.Context) error {
-		errInfo := register.NewSageError()
+		errInfo := register.NewCrabError()
 		// TODO make sure controller can not set struct attribute
 		// it may be lead to concurrent request contamination
 		v := reflect.ValueOf(ctrl)
@@ -63,7 +64,7 @@ func patchHandlerFunc(ctrl interface{}, meta *common.RestfulApiMeta) *common.Res
 		resList := v.MethodByName(common.ControllerPreExecute).Call(preInValue)
 		if len(resList) == 1 {
 			res := resList[0].Interface()
-			if err, ok := res.(*register.SageError); ok && err.Succ() == false {
+			if err, ok := res.(*register.CrabError); ok && err.Success() == false {
 				return e.JSON(err.HttpCode, err)
 			}
 		}
@@ -82,9 +83,9 @@ func patchHandlerFunc(ctrl interface{}, meta *common.RestfulApiMeta) *common.Res
 		alog.Infof("request accept controller:%v,method:%v", meta.Mod, methodName)
 		if len(respList) == 1 {
 			respIf := respList[0].Interface()
-			if resp, ok := respIf.(*register.SageResponse); ok {
+			if resp, ok := respIf.(*register.CrabResponse); ok {
 				return e.JSON(resp.HttpCode, resp)
-			} else if errInfo, ok := respIf.(*register.SageError); ok {
+			} else if errInfo, ok := respIf.(*register.CrabError); ok {
 				return e.JSON(errInfo.HttpCode, errInfo)
 			}
 		}

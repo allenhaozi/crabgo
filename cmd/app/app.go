@@ -3,6 +3,7 @@ package app
 import (
 	"context"
 	"fmt"
+	"github.com/allenhaozi/crabgo/pkg/crab"
 	"os"
 
 	log "github.com/sirupsen/logrus"
@@ -10,7 +11,6 @@ import (
 
 	"github.com/allenhaozi/crabgo/cmd/app/options"
 	"github.com/allenhaozi/crabgo/pkg/register"
-	"github.com/allenhaozi/crabgo/pkg/sage"
 	"github.com/allenhaozi/crabgo/pkg/server"
 )
 
@@ -62,7 +62,7 @@ func StartWebServer(ctx context.Context, cfg *register.Config) error {
 	//start restful api web server
 	webServer := server.NewWebServer()
 
-	restfulApiList := sage.Setup(cfg)
+	restfulApiList := crab.Setup(cfg)
 
 	webServer.RegisterHttpHandler(restfulApiList)
 
