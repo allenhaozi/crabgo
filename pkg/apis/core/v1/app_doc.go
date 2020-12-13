@@ -1,6 +1,6 @@
 package v1
 
-type SageAppDoc struct {
+type AppDoc struct {
 	ID              uint32 `json:"id"`
 	AppId           string `json:"appId"`
 	Type            string `json:"type"`

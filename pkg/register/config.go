@@ -8,12 +8,12 @@ import (
 var PConfig *Config
 
 type ExtraConfig struct {
-	MyClient   *storage.MySqlClient
+	MyClient *storage.MySqlClient
 }
 
 type GeneralConfig struct {
-	SageConfig *config.SageConfig
-	MyConfig   *config.SageMysqlConfig
+	CrabConfig *config.CrabConfig
+	MyConfig   *config.CrabMysqlConfig
 }
 
 type Config struct {
@@ -40,13 +40,13 @@ func NewConfig() (*Config, error) {
 func (c *Config) initConfig() error {
 	c.GeneralConfig = &GeneralConfig{}
 
-	cfg, err := config.GetSageConfig()
+	cfg, err := config.GetCrabConfig()
 	if err != nil {
 		return err
 	}
 
 	// sage config
-	c.GeneralConfig.SageConfig = cfg
+	c.GeneralConfig.CrabConfig = cfg
 
 	return nil
 }

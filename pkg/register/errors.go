@@ -5,7 +5,7 @@ import (
 	"strconv"
 )
 
-type SageError struct {
+type CrabError struct {
 	HttpCode int    `json:"-"`
 	Message  string `json:"msg"`
 	Reason   string `json:"reason,omitempty"`
@@ -23,8 +23,8 @@ var errMsgMap = map[int]string{
 	http.StatusInternalServerError: "response controller failure",
 }
 
-func NewSageError() *SageError {
-	return &SageError{
+func NewCrabError() *CrabError {
+	return &CrabError{
 		HttpCode: http.StatusOK,
 		Message:  errMsgMap[http.StatusOK],
 		Status:   "0",
@@ -33,7 +33,7 @@ func NewSageError() *SageError {
 }
 
 // implement interface ProphetResponseInf
-func (se *SageError) SetData(code int, dataList ...interface{}) {
+func (se *CrabError) SetData(code int, dataList ...interface{}) {
 	if msg, ok := errMsgMap[code]; ok {
 		se.Message = msg
 	} else {
@@ -49,14 +49,14 @@ func (se *SageError) SetData(code int, dataList ...interface{}) {
 	}
 }
 
-func (se *SageError) GetMsg(code int) string {
+func (se *CrabError) GetMsg(code int) string {
 	if str, ok := errMsgMap[code]; ok {
 		return str
 	}
 	return errMsgMap[http.StatusBadRequest]
 }
 
-func (se *SageError) Succ() bool {
+func (se *CrabError) Success() bool {
 	if se.HttpCode == http.StatusOK {
 		return true
 	}

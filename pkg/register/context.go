@@ -14,13 +14,13 @@ type Context struct {
 }
 
 func (c Context) DebugModel() bool {
-	return c.Config.GeneralConfig.SageConfig.LogLevel == log.DebugLevel
+	return c.Config.GeneralConfig.CrabConfig.LogLevel == log.DebugLevel
 }
 
 func (c Context) GetNamespace() string {
-	return c.Config.GeneralConfig.SageConfig.SageNamespace
+	return c.Config.GeneralConfig.CrabConfig.Namespace
 }
 
 func (c Context) GetDockerSecret() string {
-	return c.Config.GeneralConfig.SageConfig.DockerSecret
+	return c.Config.GeneralConfig.CrabConfig.DockerSecret
 }
