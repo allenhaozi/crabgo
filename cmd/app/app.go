@@ -3,8 +3,9 @@ package app
 import (
 	"context"
 	"fmt"
-	"github.com/allenhaozi/crabgo/pkg/crab"
 	"os"
+
+	"github.com/allenhaozi/crabgo/pkg/crab"
 
 	log "github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
@@ -17,6 +18,7 @@ import (
 func NewCrabCommand() *cobra.Command {
 
 	opts, err := options.NewOptions()
+
 	//init log
 	if err != nil {
 		fmt.Printf("parse option occur error, error:%s", err.Error())
@@ -54,6 +56,7 @@ func Run(ctx context.Context, cfg *register.Config) error {
 func buildServiceChain(ctx context.Context, cfg *register.Config) error {
 	// register image
 	var err error
+
 	return err
 }
 

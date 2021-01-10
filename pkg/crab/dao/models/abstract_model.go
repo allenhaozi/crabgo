@@ -12,8 +12,12 @@ type AbstractModel struct {
 }
 
 func (am *AbstractModel) SetConf(cfg *register.Config) {
-	am.Cfg = cfg
-	am.db = cfg.ExtraConfig.MyClient
+	if cfg != nil {
+		am.Cfg = cfg
+	}
+	if cfg.ExtraConfig.MyClient != nil {
+		am.db = cfg.ExtraConfig.MyClient
+	}
 }
 
 func (am *AbstractModel) getDB(debug bool) *gorm.DB {

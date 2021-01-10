@@ -27,9 +27,7 @@ var connFormat = "%s:%s@tcp(%s:%s)/%s?%s"
 var connParamsFormat = "charset=utf8&parseTime=True&loc=%s"
 
 func GetMysqlConfig() (*CrabMysqlConfig, error) {
-	if true {
-		return nil, nil
-	}
+
 	var cfg CrabMysqlConfig
 	if h, ok := os.LookupEnv("DB_HOST"); ok {
 		cfg.Host = h

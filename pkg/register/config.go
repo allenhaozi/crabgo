@@ -5,7 +5,11 @@ import (
 	"github.com/allenhaozi/crabgo/pkg/register/storage"
 )
 
-var PConfig *Config
+var pConfig *Config
+
+func GetGlobalConfig() *Config {
+	return pConfig
+}
 
 type ExtraConfig struct {
 	MyClient *storage.MySqlClient
@@ -25,14 +29,16 @@ func NewConfig() (*Config, error) {
 
 	c := &Config{}
 
-	err := c.initConfig()
+	if err := c.initConfig(); err != nil {
+		return nil, err
+	}
 
-	if err != nil {
+	if err := c.initClient(); err != nil {
 		return nil, err
 	}
 
 	// set a global var save Config value
-	PConfig = c
+	pConfig = c
 
 	return c, nil
 }
@@ -45,7 +51,16 @@ func (c *Config) initConfig() error {
 		return err
 	}
 
-	// sage config
+	mCfg, err := config.GetMysqlConfig()
+
+	if err != nil {
+		return err
+	}
+
+	// assign mysql config
+	c.GeneralConfig.MyConfig = mCfg
+
+	// assign sys config
 	c.GeneralConfig.CrabConfig = cfg
 
 	return nil
