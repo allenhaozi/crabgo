@@ -26,7 +26,7 @@ func NewCrabCommand() *cobra.Command {
 	}
 	cmd := &cobra.Command{
 		Use:  "app-manager",
-		Long: "sage app manager",
+		Long: "crab app manager",
 		Run: func(cmd *cobra.Command, args []string) {
 			if err := runCommand(cmd, args, opts); err != nil {
 				fmt.Printf("runCommand occur err, msg:%s", err.Error())

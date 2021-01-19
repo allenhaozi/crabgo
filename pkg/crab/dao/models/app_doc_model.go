@@ -19,6 +19,10 @@ type AppDocModel struct {
 	MTime       time.Time `gorm:"column:mtime"`
 }
 
+func (ad AppDocModel) TableName() string {
+	return "app_docs"
+}
+
 func (ad *AppDocModel) ToAppDoc() *crabcorev1.AppDoc {
 	doc := &crabcorev1.AppDoc{}
 	return doc

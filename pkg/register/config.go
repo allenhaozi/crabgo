@@ -52,7 +52,6 @@ func (c *Config) initConfig() error {
 	}
 
 	mCfg, err := config.GetMysqlConfig()
-
 	if err != nil {
 		return err
 	}
@@ -71,11 +70,15 @@ func (c *Config) initClient() error {
 	c.ExtraConfig = &ExtraConfig{}
 
 	// mysql client
-	my, err := storage.NewMySqlClient(c.GeneralConfig.MyConfig)
-	if err != nil {
-		return err
+
+	if c.GeneralConfig.MyConfig != nil {
+		my, err := storage.NewMySqlClient(c.GeneralConfig.MyConfig)
+		if err != nil {
+			return err
+		}
+		c.ExtraConfig.MyClient = my
+
 	}
-	c.ExtraConfig.MyClient = my
 
 	return nil
 }

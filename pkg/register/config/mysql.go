@@ -9,7 +9,6 @@ import (
 
 var (
 	timeZone = "Asia/Shanghai"
-	dbName   = "app-manager"
 )
 
 type CrabMysqlConfig struct {
@@ -29,6 +28,13 @@ var connParamsFormat = "charset=utf8&parseTime=True&loc=%s"
 func GetMysqlConfig() (*CrabMysqlConfig, error) {
 
 	var cfg CrabMysqlConfig
+
+	if h, ok := os.LookupEnv("DB_NAME"); ok {
+		cfg.DBName = h
+	} else {
+		return nil, errors.New("can not found db name")
+	}
+
 	if h, ok := os.LookupEnv("DB_HOST"); ok {
 		cfg.Host = h
 	} else {
@@ -62,8 +68,6 @@ func GetMysqlConfig() (*CrabMysqlConfig, error) {
 		}
 		cfg.ConnParams = fmt.Sprintf(connParamsFormat, url.QueryEscape(tz))
 	}
-
-	cfg.DBName = dbName
 
 	return &cfg, nil
 }

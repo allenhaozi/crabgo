@@ -9,12 +9,9 @@ import (
 )
 
 var (
-	defaultGateWay                   = "http://gateway"
 	httpPrefix                       = "http://"
 	defaultWebPort                   = "9000"
 	defaultPeriodAppStatusInspection = 10
-	defConfigCenterAddr              = "http://config-center"
-	defKeyStoneAddr                  = "http://keystone"
 	defRSAKeyDir                     = "/home/work/etc"
 )
 
@@ -51,7 +48,7 @@ func (cfg *CrabConfig) initByEnv() error {
 	if port, ok := os.LookupEnv("WEB_SERVER_PORT"); ok {
 		cfg.WebServerPort = port
 	} else {
-		cfg.CrabGateWay = defaultGateWay
+		cfg.WebServerPort = defaultWebPort
 	}
 
 	return nil
