@@ -5,6 +5,8 @@ import (
 	"reflect"
 	"sync"
 
+	crabcorev1 "github.com/allenhaozi/crabgo/pkg/apis/core/v1"
+
 	"github.com/allenhaozi/crabgo/pkg/crab/manager"
 
 	"github.com/allenhaozi/crabgo/pkg/apis/common"
@@ -22,6 +24,7 @@ func SetupAppDoc(cfg *register.Config, carrier *sync.Map) (string, []common.Rest
 	carrier.Store(k, api)
 	return k, []common.RestfulApiMeta{
 		common.RestfulApiMeta{}.Gen(k, http.MethodGet, "GetAppDoc", "/app/doc/:appId"),
+		common.RestfulApiMeta{}.Gen(k, http.MethodPost, "CreateAppDoc", "/app/doc"),
 	}
 }
 
@@ -35,5 +38,12 @@ func NewAppDocApi(cfg *register.Config) *appDocApi {
 func (as *appDocApi) GetAppDocAction(ctx register.Context) register.CrabResponseIf {
 	appId := ctx.Param("appId")
 	resp := as.GetAppDoc(ctx, appId)
+	return resp
+}
+
+func (as *appDocApi) CreateAppDocAction(ctx register.Context) register.CrabResponseIf {
+	req := &crabcorev1.AppDoc{}
+	ctx.Bind(req)
+	resp := as.CreateAppDoc(ctx, req)
 	return resp
 }

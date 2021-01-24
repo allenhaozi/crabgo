@@ -27,7 +27,33 @@ func (ads *AppDocService) GetAppDoc(ctx register.Context, appId string) (*crabco
 		return nil, errors.Wrap(err, "get model failure from db")
 	}
 
-	doc = docModel.ToAppDoc()
+	doc, err = docModel.ToAppDoc()
 
+	if err != nil {
+		return nil, err
+	}
 	return doc, nil
+}
+
+func (ads *AppDocService) CreateAppDoc(ctx register.Context, req *crabcorev1.AppDoc) (*crabcorev1.AppDoc, error) {
+
+	m := &models.AppDocModel{}
+	if err := m.ToModel(req); err != nil {
+		return nil, err
+	}
+	v := "{}"
+	m.Labels, m.Annotations = v, v
+
+	db := ads.appDocDao.Create(ctx, m)
+
+	if db.Error != nil {
+		return nil, db.Error
+	}
+
+	meta, err := m.ToAppDoc()
+	if err != nil {
+		return nil, err
+	}
+
+	return meta, nil
 }

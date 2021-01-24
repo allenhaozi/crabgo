@@ -1,6 +1,11 @@
 package models
 
-import "github.com/allenhaozi/crabgo/pkg/register"
+import (
+	"time"
+
+	"github.com/allenhaozi/crabgo/pkg/register"
+	"gorm.io/gorm"
+)
 
 type AppDocDAO struct {
 	AbstractModel
@@ -17,4 +22,12 @@ func (ad *AppDocDAO) GetAppDocById(ctx register.Context, appId string) (*AppDocM
 	db := ad.getDB(ctx.DebugModel())
 	resp := db.Where("app_id = ?", appId).First(&appDoc)
 	return &appDoc, resp.Error
+}
+
+func (ad *AppDocDAO) Create(ctx register.Context, appDocModel *AppDocModel) *gorm.DB {
+	db := ad.getDB(ctx.DebugModel())
+	t := time.Now()
+	appDocModel.CTime, appDocModel.MTime = t, t
+	res := db.Create(appDocModel)
+	return res
 }
