@@ -1,8 +1,6 @@
 package options
 
-import (
-	"github.com/allenhaozi/crabgo/pkg/register"
-)
+import "gitlab.4pd.io/openaios/openaios-iam/pkg/register"
 
 type Options struct {
 	Config *register.Config
