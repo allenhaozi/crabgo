@@ -5,28 +5,27 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/allenhaozi/crabgo/pkg/crab"
-
 	log "github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
 
-	"github.com/allenhaozi/crabgo/cmd/app/options"
-	"github.com/allenhaozi/crabgo/pkg/register"
-	"github.com/allenhaozi/crabgo/pkg/server"
+	"gitlab.4pd.io/openaios/openaios-iam/cmd/app/options"
+	"gitlab.4pd.io/openaios/openaios-iam/pkg/register"
+	"gitlab.4pd.io/openaios/openaios-iam/pkg/restapi"
+	"gitlab.4pd.io/openaios/openaios-iam/pkg/server"
+	"gitlab.4pd.io/openaios/openaios-iam/pkg/utils"
 )
 
-func NewCrabCommand() *cobra.Command {
+func NewIAMCommand() *cobra.Command {
 
 	opts, err := options.NewOptions()
-
 	//init log
 	if err != nil {
 		fmt.Printf("parse option occur error, error:%s", err.Error())
 		os.Exit(1)
 	}
 	cmd := &cobra.Command{
-		Use:  "app-manager",
-		Long: "crab app manager",
+		Use:  "openaios-iam",
+		Long: "openaios iam system",
 		Run: func(cmd *cobra.Command, args []string) {
 			if err := runCommand(cmd, args, opts); err != nil {
 				fmt.Printf("runCommand occur err, msg:%s", err.Error())
@@ -47,6 +46,8 @@ func Run(ctx context.Context, cfg *register.Config) error {
 	// initial log
 	InitLog(cfg)
 
+	utils.InstallgoroutineDumpGenerator()
+
 	if err := buildServiceChain(ctx, cfg); err != nil {
 		return err
 	}
@@ -56,7 +57,6 @@ func Run(ctx context.Context, cfg *register.Config) error {
 func buildServiceChain(ctx context.Context, cfg *register.Config) error {
 	// register image
 	var err error
-
 	return err
 }
 
@@ -65,11 +65,13 @@ func StartWebServer(ctx context.Context, cfg *register.Config) error {
 	//start restful api web server
 	webServer := server.NewWebServer()
 
-	restfulApiList := crab.Setup(cfg)
+	restfulApiList := restapi.Setup(cfg)
+
+	log.Info("starts registering restful apis")
 
 	webServer.RegisterHttpHandler(restfulApiList)
 
-	log.Info("start server before")
+	log.Info("restful apis are registered")
 
 	err = webServer.StartHttpServer(cfg)
 	return err
@@ -78,7 +80,7 @@ func StartWebServer(ctx context.Context, cfg *register.Config) error {
 //func InitLog(cfg *register.Config) {
 func InitLog(cfg *register.Config) {
 
-	//log.SetLevel(cfg.GeneralConfig.SageConfig.LogLevel)
+	log.SetLevel(cfg.GeneralConfig.IAMConfig.LogLevel)
 
 	log.SetOutput(os.Stdout)
 	log.SetFormatter(&log.TextFormatter{

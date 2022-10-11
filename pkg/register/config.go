@@ -1,23 +1,33 @@
+/**
+ * Copyright 2021 4Paradigm
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package register
 
 import (
-	"github.com/allenhaozi/crabgo/pkg/register/config"
-	"github.com/allenhaozi/crabgo/pkg/register/storage"
+	"gitlab.4pd.io/openaios/openaios-iam/pkg/register/config"
 )
 
-var pConfig *Config
-
-func GetGlobalConfig() *Config {
-	return pConfig
-}
+var PConfig *Config
 
 type ExtraConfig struct {
-	MyClient *storage.MySqlClient
 }
 
 type GeneralConfig struct {
-	CrabConfig *config.CrabConfig
-	MyConfig   *config.CrabMysqlConfig
+	IAMConfig *config.IAMConfig
+	MyConfig  *config.MysqlConfig
 }
 
 type Config struct {
@@ -29,56 +39,46 @@ func NewConfig() (*Config, error) {
 
 	c := &Config{}
 
-	if err := c.initConfig(); err != nil {
+	err := c.initConfig()
+
+	if err != nil {
 		return nil, err
 	}
 
-	if err := c.initClient(); err != nil {
+	// init clients which openaios-iam need
+	err = c.initClient()
+	if err != nil {
 		return nil, err
 	}
 
 	// set a global var save Config value
-	pConfig = c
+	PConfig = c
 
 	return c, nil
 }
 
 func (c *Config) initConfig() error {
 	c.GeneralConfig = &GeneralConfig{}
+	// mysql config
+	/*
+			myCfg, err := config.GetMysqlConfig()
+			if err != nil {
+				return err
+			}
+		c.GeneralConfig.MyConfig = myCfg
+	*/
 
-	cfg, err := config.GetCrabConfig()
+	cfg, err := config.GetIAMConfig()
 	if err != nil {
 		return err
 	}
 
-	mCfg, err := config.GetMysqlConfig()
-	if err != nil {
-		return err
-	}
-
-	// assign mysql config
-	c.GeneralConfig.MyConfig = mCfg
-
-	// assign sys config
-	c.GeneralConfig.CrabConfig = cfg
+	// openaios config
+	c.GeneralConfig.IAMConfig = cfg
 
 	return nil
 }
 
 func (c *Config) initClient() error {
-
-	c.ExtraConfig = &ExtraConfig{}
-
-	// mysql client
-
-	if c.GeneralConfig.MyConfig != nil {
-		my, err := storage.NewMySqlClient(c.GeneralConfig.MyConfig)
-		if err != nil {
-			return err
-		}
-		c.ExtraConfig.MyClient = my
-
-	}
-
 	return nil
 }

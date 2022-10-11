@@ -1,7 +1,0 @@
-# Request example
-
-
-
-### Get
-
-+ /apis/

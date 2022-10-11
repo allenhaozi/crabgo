@@ -74,7 +74,7 @@ func (rc RSACipher) Signature(plainText []byte, priKey []byte) ([]byte, error) {
 	return rsa.SignPSS(rand.Reader, privateKey, crypto.SHA256, msgHashSum, nil)
 }
 
-func (rc RSACipher) VerifySignature(plainText []byte, pubKey, signature []byte) error {
+func (rc RSACipher) VerifySignature(plainText, pubKey, signature []byte) error {
 	block, _ := pem.Decode(pubKey)
 
 	if block == nil {

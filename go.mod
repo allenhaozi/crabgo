@@ -1,19 +1,20 @@
-module github.com/allenhaozi/crabgo
+module gitlab.4pd.io/openaios/openaios-iam
 
-go 1.13
+go 1.16
 
 require (
-	github.com/go-sql-driver/mysql v1.5.0
-	github.com/jinzhu/copier v0.2.3
-	github.com/labstack/echo/v4 v4.1.17
-	github.com/mohae/deepcopy v0.0.0-20170929034955-c48cc78d4826
+	github.com/go-logr/logr v0.4.0
+	github.com/go-openapi/runtime v0.19.31
+	github.com/go-openapi/strfmt v0.20.2
+	github.com/google/uuid v1.1.2
+	github.com/labstack/echo/v4 v4.6.1
+	github.com/ory/fosite v0.41.0
+	github.com/ory/hydra-client-go v1.10.6
+	github.com/ory/kratos-client-go v0.8.2-alpha.1
 	github.com/pkg/errors v0.9.1
-	github.com/sirupsen/logrus v1.6.0
-	github.com/spf13/cobra v1.0.0
-	github.com/spf13/pflag v1.0.5 // indirect
-	github.com/stretchr/testify v1.5.1 // indirect
-	gopkg.in/check.v1 v1.0.0-20190902080502-41f04d3bba15 // indirect
-	gopkg.in/yaml.v2 v2.2.8 // indirect
-	gorm.io/driver/mysql v1.0.3
-	gorm.io/gorm v1.20.8
+	github.com/sirupsen/logrus v1.8.1
+	github.com/spf13/cobra v1.1.3
+	github.com/swaggo/echo-swagger v1.1.4
+	k8s.io/apimachinery v0.22.2
+	sigs.k8s.io/controller-runtime v0.10.3
 )
