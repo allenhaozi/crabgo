@@ -7,7 +7,7 @@ require (
 	github.com/go-openapi/runtime v0.19.31
 	github.com/go-openapi/strfmt v0.20.2
 	github.com/google/uuid v1.1.2
-	github.com/labstack/echo/v4 v4.6.1
+	github.com/labstack/echo/v4 v4.9.0
 	github.com/ory/fosite v0.41.0
 	github.com/ory/hydra-client-go v1.10.6
 	github.com/ory/kratos-client-go v0.8.2-alpha.1
