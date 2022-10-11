@@ -18,10 +18,10 @@ package handler
 import (
 	"net/http"
 
+	iamcorev1alpha1 "github.com/allenhaozi/crabgo/apis/core/v1alpha1"
+	"github.com/allenhaozi/crabgo/pkg/register"
+	"github.com/allenhaozi/crabgo/pkg/service/mesh"
 	log "github.com/sirupsen/logrus"
-	iamcorev1alpha1 "gitlab.4pd.io/openaios/openaios-iam/apis/core/v1alpha1"
-	"gitlab.4pd.io/openaios/openaios-iam/pkg/register"
-	"gitlab.4pd.io/openaios/openaios-iam/pkg/service/mesh"
 )
 
 type TokenHandler struct {

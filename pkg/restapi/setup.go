@@ -23,10 +23,11 @@ import (
 
 	"github.com/labstack/echo/v4"
 	log "github.com/sirupsen/logrus"
-	"gitlab.4pd.io/openaios/openaios-iam/apis/common"
-	"gitlab.4pd.io/openaios/openaios-iam/pkg/register"
-	iamapi "gitlab.4pd.io/openaios/openaios-iam/pkg/restapi/api"
 	"k8s.io/apimachinery/pkg/runtime/schema"
+
+	"github.com/allenhaozi/crabgo/apis/common"
+	"github.com/allenhaozi/crabgo/pkg/register"
+	iamapi "github.com/allenhaozi/crabgo/pkg/restapi/api"
 )
 
 func Setup(cfg *register.Config) map[schema.GroupVersion][]common.RestAPIMeta {
@@ -81,7 +82,7 @@ func patchHandlerFunc(c interface{}, meta *common.RestAPIMeta) *common.RestAPIMe
 
 		if len(resList) == 1 {
 			res := resList[0].Interface()
-			if err, ok := res.(*register.IAMError); ok && !err.Success() {
+			if err, ok := res.(*register.CrabError); ok && !err.Success() {
 				return e.JSON(err.HttpCode, err)
 			}
 		}
@@ -111,7 +112,7 @@ func patchHandlerFunc(c interface{}, meta *common.RestAPIMeta) *common.RestAPIMe
 					// default format is json
 					return e.JSON(errInfo.HttpCode, resp)
 				}
-			} else if errInfo, ok := respIf.(*register.IAMError); ok {
+			} else if errInfo, ok := respIf.(*register.CrabError); ok {
 				return e.JSON(errInfo.HttpCode, errInfo)
 			}
 		}

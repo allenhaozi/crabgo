@@ -17,7 +17,7 @@
 package internal
 
 import (
-	"gitlab.4pd.io/openaios/openaios-iam/pkg/register"
+	"github.com/allenhaozi/crabgo/pkg/register"
 )
 
 type ApiController struct {
@@ -28,7 +28,7 @@ func (ac *ApiController) PreExecute(ctx *register.Context) register.IAMResponseI
 	return ac.preCheck(ctx)
 }
 
-func (ac *ApiController) preCheck(ctx *register.Context) *register.IAMError {
+func (ac *ApiController) preCheck(ctx *register.Context) *register.CrabError {
 	errInfo := register.NewCrabError()
 	return errInfo
 }

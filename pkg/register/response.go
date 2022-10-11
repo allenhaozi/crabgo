@@ -21,7 +21,7 @@ import (
 
 	"github.com/pkg/errors"
 
-	"gitlab.4pd.io/openaios/openaios-iam/pkg/utils"
+	"github.com/allenhaozi/crabgo/pkg/utils"
 )
 
 type IAMResponseType string

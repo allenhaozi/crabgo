@@ -23,7 +23,7 @@ import (
 	hydramodels "github.com/ory/hydra-client-go/models"
 	"github.com/pkg/errors"
 
-	"gitlab.4pd.io/openaios/openaios-iam/pkg/register"
+	"github.com/allenhaozi/crabgo/pkg/register"
 )
 
 type ConsentService struct {

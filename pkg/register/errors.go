@@ -22,7 +22,7 @@ import (
 	"strconv"
 )
 
-type IAMError struct {
+type CrabError struct {
 	HttpCode     int             `json:"-"`
 	ResponseType IAMResponseType `json:"-"`
 	Message      string          `json:"msg"`
@@ -41,8 +41,8 @@ var errMsgMap = map[int]string{
 	http.StatusInternalServerError: "response controller failure",
 }
 
-func NewCrabError() *IAMError {
-	return &IAMError{
+func NewCrabError() *CrabError {
+	return &CrabError{
 		HttpCode:     http.StatusOK,
 		ResponseType: IAMResponseTypeJSON,
 		Message:      errMsgMap[http.StatusOK],
@@ -52,7 +52,7 @@ func NewCrabError() *IAMError {
 }
 
 // implement interface IAMResponseInf
-func (i *IAMError) SetData(code int, t IAMResponseType, dataList ...interface{}) {
+func (i *CrabError) SetData(code int, t IAMResponseType, dataList ...interface{}) {
 
 	i.ResponseType = t
 
@@ -81,13 +81,13 @@ func (i *IAMError) SetData(code int, t IAMResponseType, dataList ...interface{})
 	}
 }
 
-func (i *IAMError) GetMsg(code int) string {
+func (i *CrabError) GetMsg(code int) string {
 	if str, ok := errMsgMap[code]; ok {
 		return str
 	}
 	return errMsgMap[http.StatusBadRequest]
 }
 
-func (i *IAMError) Success() bool {
+func (i *CrabError) Success() bool {
 	return i.HttpCode == http.StatusOK
 }

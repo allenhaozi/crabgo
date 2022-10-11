@@ -19,9 +19,9 @@ package handler
 import (
 	"net/http"
 
+	"github.com/allenhaozi/crabgo/pkg/register"
+	"github.com/allenhaozi/crabgo/pkg/service/mesh"
 	log "github.com/sirupsen/logrus"
-	"gitlab.4pd.io/openaios/openaios-iam/pkg/register"
-	"gitlab.4pd.io/openaios/openaios-iam/pkg/service/mesh"
 )
 
 type ConsentHandler struct {

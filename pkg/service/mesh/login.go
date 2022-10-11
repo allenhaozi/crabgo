@@ -27,8 +27,8 @@ import (
 	kratosclient "github.com/ory/kratos-client-go"
 	"github.com/pkg/errors"
 
-	iamcorev1alpha1 "gitlab.4pd.io/openaios/openaios-iam/apis/core/v1alpha1"
-	"gitlab.4pd.io/openaios/openaios-iam/pkg/register"
+	iamcorev1alpha1 "github.com/allenhaozi/crabgo/apis/core/v1alpha1"
+	"github.com/allenhaozi/crabgo/pkg/register"
 )
 
 type LoginService struct {

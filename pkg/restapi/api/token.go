@@ -22,11 +22,11 @@ import (
 	"strings"
 	"sync"
 
-	"gitlab.4pd.io/openaios/openaios-iam/apis/common"
-	iamcorev1alpha1 "gitlab.4pd.io/openaios/openaios-iam/apis/core/v1alpha1"
-	"gitlab.4pd.io/openaios/openaios-iam/pkg/register"
-	"gitlab.4pd.io/openaios/openaios-iam/pkg/restapi/internal"
-	"gitlab.4pd.io/openaios/openaios-iam/pkg/service/handler"
+	"github.com/allenhaozi/crabgo/apis/common"
+	iamcorev1alpha1 "github.com/allenhaozi/crabgo/apis/core/v1alpha1"
+	"github.com/allenhaozi/crabgo/pkg/register"
+	"github.com/allenhaozi/crabgo/pkg/restapi/internal"
+	"github.com/allenhaozi/crabgo/pkg/service/handler"
 )
 
 type TokenAPI struct {

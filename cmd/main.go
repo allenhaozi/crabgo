@@ -3,7 +3,7 @@ package main
 import (
 	"os"
 
-	"gitlab.4pd.io/openaios/openaios-iam/cmd/app"
+	"github.com/allenhaozi/crabgo/cmd/app"
 )
 
 func main() {

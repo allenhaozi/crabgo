@@ -17,7 +17,7 @@
 package register
 
 import (
-	"gitlab.4pd.io/openaios/openaios-iam/pkg/register/config"
+	"github.com/allenhaozi/crabgo/pkg/register/config"
 )
 
 var PConfig *Config

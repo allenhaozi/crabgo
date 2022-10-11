@@ -8,11 +8,11 @@ import (
 	log "github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
 
-	"gitlab.4pd.io/openaios/openaios-iam/cmd/app/options"
-	"gitlab.4pd.io/openaios/openaios-iam/pkg/register"
-	"gitlab.4pd.io/openaios/openaios-iam/pkg/restapi"
-	"gitlab.4pd.io/openaios/openaios-iam/pkg/server"
-	"gitlab.4pd.io/openaios/openaios-iam/pkg/utils"
+	"github.com/allenhaozi/crabgo/cmd/app/options"
+	"github.com/allenhaozi/crabgo/pkg/register"
+	"github.com/allenhaozi/crabgo/pkg/restapi"
+	"github.com/allenhaozi/crabgo/pkg/server"
+	"github.com/allenhaozi/crabgo/pkg/utils"
 )
 
 func NewIAMCommand() *cobra.Command {

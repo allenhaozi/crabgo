@@ -4,11 +4,11 @@ import (
 	"io"
 	"net/http"
 
+	"github.com/allenhaozi/crabgo/apis/common"
+	"github.com/allenhaozi/crabgo/pkg/register"
 	echo "github.com/labstack/echo/v4"
 	log "github.com/sirupsen/logrus"
 	echoswagger "github.com/swaggo/echo-swagger"
-	"gitlab.4pd.io/openaios/openaios-iam/apis/common"
-	"gitlab.4pd.io/openaios/openaios-iam/pkg/register"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 )
 
