@@ -24,8 +24,8 @@ func NewIAMCommand() *cobra.Command {
 		os.Exit(1)
 	}
 	cmd := &cobra.Command{
-		Use:  "openaios-iam",
-		Long: "openaios iam system",
+		Use:  "crabgo",
+		Long: "crabgo project",
 		Run: func(cmd *cobra.Command, args []string) {
 			if err := runCommand(cmd, args, opts); err != nil {
 				fmt.Printf("runCommand occur err, msg:%s", err.Error())
@@ -80,7 +80,7 @@ func StartWebServer(ctx context.Context, cfg *register.Config) error {
 //func InitLog(cfg *register.Config) {
 func InitLog(cfg *register.Config) {
 
-	log.SetLevel(cfg.GeneralConfig.IAMConfig.LogLevel)
+	log.SetLevel(cfg.GeneralConfig.CrabConfig.LogLevel)
 
 	log.SetOutput(os.Stdout)
 	log.SetFormatter(&log.TextFormatter{

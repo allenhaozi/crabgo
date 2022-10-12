@@ -26,7 +26,7 @@ type LogConfig struct {
 	LogLevel log.Level
 }
 
-func (l *IAMConfig) initLogConfig() error {
+func (l *CrabConfig) initLogConfig() error {
 	cfg := &LogConfig{}
 
 	// log level

@@ -23,11 +23,11 @@ import (
 )
 
 type CrabError struct {
-	HttpCode     int             `json:"-"`
-	ResponseType IAMResponseType `json:"-"`
-	Message      string          `json:"msg"`
-	Reason       string          `json:"reason,omitempty"`
-	Status       string          `json:"status"`
+	HttpCode     int              `json:"-"`
+	ResponseType CrabResponseType `json:"-"`
+	Message      string           `json:"msg"`
+	Reason       string           `json:"reason,omitempty"`
+	Status       string           `json:"status"`
 }
 
 var errMsgMap = map[int]string{
@@ -44,15 +44,15 @@ var errMsgMap = map[int]string{
 func NewCrabError() *CrabError {
 	return &CrabError{
 		HttpCode:     http.StatusOK,
-		ResponseType: IAMResponseTypeJSON,
+		ResponseType: CrabResponseTypeJSON,
 		Message:      errMsgMap[http.StatusOK],
 		Status:       "0",
 	}
 
 }
 
-// implement interface IAMResponseInf
-func (i *CrabError) SetData(code int, t IAMResponseType, dataList ...interface{}) {
+// implement interface CrabResponseInf
+func (i *CrabError) SetData(code int, t CrabResponseType, dataList ...interface{}) {
 
 	i.ResponseType = t
 

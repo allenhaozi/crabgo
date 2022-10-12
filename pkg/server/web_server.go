@@ -25,13 +25,13 @@ func NewWebServer() *WebServer {
 // start a http web server
 func (ws *WebServer) StartHttpServer(cfg *register.Config) error {
 
-	log.Infof("success start web server port:%s", cfg.GeneralConfig.IAMConfig.WebServerPort)
+	log.Infof("success start web server port:%s", cfg.GeneralConfig.CrabConfig.WebServerPort)
 	// register http health check
 	ws.patchHealthCheck()
 	// swagger handler for api docs
 	ws.patchSwaggerHandler()
 	// start server at the end of the code
-	err := ws.Start(":" + cfg.GeneralConfig.IAMConfig.WebServerPort)
+	err := ws.Start(":" + cfg.GeneralConfig.CrabConfig.WebServerPort)
 	return err
 }
 

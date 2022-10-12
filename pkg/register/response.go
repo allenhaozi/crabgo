@@ -24,29 +24,29 @@ import (
 	"github.com/allenhaozi/crabgo/pkg/utils"
 )
 
-type IAMResponseType string
+type CrabResponseType string
 
 var (
-	IAMResponseTypeRedirect IAMResponseType = "Redirect"
-	IAMResponseTypeJSON     IAMResponseType = "JSON"
+	CrabResponseTypeRedirect CrabResponseType = "Redirect"
+	CrabResponseTypeJSON     CrabResponseType = "JSON"
 )
 
-type IAMResponse struct {
-	HttpCode     int             `json:"-"`
-	Msg          string          `json:"msg"`
-	Status       string          `json:"status"`
-	ResponseType IAMResponseType `json:"-"`
-	Data         interface{}     `json:"data" swaggertype:"array,object"`
+type CrabResponse struct {
+	HttpCode     int              `json:"-"`
+	Msg          string           `json:"msg"`
+	Status       string           `json:"status"`
+	ResponseType CrabResponseType `json:"-"`
+	Data         interface{}      `json:"data" swaggertype:"array,object"`
 }
 
-func NewIAMResponse() *IAMResponse {
-	return &IAMResponse{
+func NewCrabResponse() *CrabResponse {
+	return &CrabResponse{
 		HttpCode: http.StatusOK,
 	}
 }
 
-//implement interface IAMResponseInf
-func (ir *IAMResponse) SetData(code int, t IAMResponseType, dataList ...interface{}) {
+//implement interface CrabResponseInf
+func (ir *CrabResponse) SetData(code int, t CrabResponseType, dataList ...interface{}) {
 
 	ir.HttpCode = code
 	ir.ResponseType = t
@@ -58,7 +58,7 @@ func (ir *IAMResponse) SetData(code int, t IAMResponseType, dataList ...interfac
 	}
 }
 
-func (ir *IAMResponse) GetRedirectURL() (string, error) {
+func (ir *CrabResponse) GetRedirectURL() (string, error) {
 	if url, ok := ir.Data.(string); ok {
 		if utils.IsURL(url) {
 			return url, nil
@@ -69,9 +69,9 @@ func (ir *IAMResponse) GetRedirectURL() (string, error) {
 
 func IsValidResponse(t string) error {
 	switch t {
-	case string(IAMResponseTypeJSON):
+	case string(CrabResponseTypeJSON):
 		return nil
-	case string(IAMResponseTypeRedirect):
+	case string(CrabResponseTypeRedirect):
 		return nil
 	default:
 		return errors.Errorf("invalid response type, %s is not supported", t)

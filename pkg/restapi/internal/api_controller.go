@@ -24,7 +24,7 @@ type ApiController struct {
 	cfg *register.Config
 }
 
-func (ac *ApiController) PreExecute(ctx *register.Context) register.IAMResponseIf {
+func (ac *ApiController) PreExecute(ctx *register.Context) register.CrabResponseIf {
 	return ac.preCheck(ctx)
 }
 
@@ -33,7 +33,7 @@ func (ac *ApiController) preCheck(ctx *register.Context) *register.CrabError {
 	return errInfo
 }
 
-func (ac *ApiController) PostExecute(ctx *register.Context) register.IAMResponseIf {
+func (ac *ApiController) PostExecute(ctx *register.Context) register.CrabResponseIf {
 	return register.NewCrabError()
 }
 

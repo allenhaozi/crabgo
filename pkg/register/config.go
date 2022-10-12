@@ -26,8 +26,8 @@ type ExtraConfig struct {
 }
 
 type GeneralConfig struct {
-	IAMConfig *config.IAMConfig
-	MyConfig  *config.MysqlConfig
+	CrabConfig *config.CrabConfig
+	MyConfig   *config.MysqlConfig
 }
 
 type Config struct {
@@ -68,13 +68,13 @@ func (c *Config) initConfig() error {
 		c.GeneralConfig.MyConfig = myCfg
 	*/
 
-	cfg, err := config.GetIAMConfig()
+	cfg, err := config.GetCrabConfig()
 	if err != nil {
 		return err
 	}
 
 	// openaios config
-	c.GeneralConfig.IAMConfig = cfg
+	c.GeneralConfig.CrabConfig = cfg
 
 	return nil
 }

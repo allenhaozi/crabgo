@@ -16,6 +16,6 @@
 
 package register
 
-type IAMResponseIf interface {
-	SetData(code int, t IAMResponseType, dataList ...interface{})
+type CrabResponseIf interface {
+	SetData(code int, t CrabResponseType, dataList ...interface{})
 }

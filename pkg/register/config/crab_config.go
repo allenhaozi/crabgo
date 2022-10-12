@@ -17,24 +17,40 @@
 package config
 
 import (
-	"net/http"
-	"net/http/cookiejar"
+	"os"
 
-	kratos "github.com/ory/kratos-client-go"
 	"github.com/pkg/errors"
 )
 
-// TODO: update to configurable
-func GetKratosAPIClient() (*kratos.APIClient, error) {
+var (
+	defaultWebPort = "8080"
+)
 
-	// create a new kratos client for self hosted server
-	conf := kratos.NewConfiguration()
-	conf.Servers = kratos.ServerConfigurations{{URL: "http://kratos.dev.openaios.4pd.io"}}
-	cj, err := cookiejar.New(nil)
+type CrabConfig struct {
+	*LogConfig
+	WebServerPort string
+}
+
+func GetCrabConfig() (*CrabConfig, error) {
+	cfg := &CrabConfig{}
+	err := cfg.initConfig()
 	if err != nil {
-		return nil, errors.Wrap(err, "new cookiejar failed")
+		return nil, errors.Wrap(err, "initialize configuration failed")
 	}
-	conf.HTTPClient = &http.Client{Jar: cj}
+	return cfg, nil
+}
 
-	return kratos.NewAPIClient(conf), nil
+func (cfg *CrabConfig) initConfig() error {
+
+	// initialize log config
+	cfg.initLogConfig()
+
+	// web server port
+	if p, ok := os.LookupEnv("SERVER_PORT"); ok {
+		cfg.WebServerPort = p
+	} else {
+		cfg.WebServerPort = defaultWebPort
+	}
+
+	return nil
 }

@@ -22,35 +22,35 @@ import (
 	"sync"
 
 	"github.com/allenhaozi/crabgo/apis/common"
-	iamcorev1alpha1 "github.com/allenhaozi/crabgo/apis/core/v1alpha1"
+	crabcorev1 "github.com/allenhaozi/crabgo/apis/core/v1"
 	"github.com/allenhaozi/crabgo/pkg/register"
 	"github.com/allenhaozi/crabgo/pkg/restapi/internal"
 	"github.com/allenhaozi/crabgo/pkg/service/handler"
 )
 
-type ConsentAPI struct {
+type DemoAPI struct {
 	internal.ApiController
-	*handler.ConsentHandler
+	*handler.DemoHandler
 }
 
-func SetupConsentAPI(cfg *register.Config, carrier *sync.Map) (string, []common.RestAPIMeta) {
-	api := NewConsentAPI(cfg)
+func SetupDemoAPI(cfg *register.Config, carrier *sync.Map) (string, []common.RestAPIMeta) {
+	api := NewDemoAPI(cfg)
 	// handler name
 	h := reflect.TypeOf(api).String()
 	carrier.Store(h, api)
 	return h, []common.RestAPIMeta{
-		common.RestAPIMeta{}.Gen(iamcorev1alpha1.GroupVersion, common.ApiGroupApis, h, http.MethodGet, "Consent", "/consent"),
+		common.RestAPIMeta{}.Gen(crabcorev1.GroupVersion, common.ApiGroupApis, h, http.MethodGet, "GetUser", "/users/:id"),
 	}
 }
 
-func NewConsentAPI(cfg *register.Config) *ConsentAPI {
-	ins := &ConsentAPI{}
+func NewDemoAPI(cfg *register.Config) *DemoAPI {
+	ins := &DemoAPI{}
 	ins.Initial(cfg)
-	ins.ConsentHandler = handler.NewConsentHandler(cfg)
+	ins.DemoHandler = handler.NewDemoHandler(cfg)
 	return ins
 }
 
-func (c *ConsentAPI) ConsentAction(ctx register.Context) register.IAMResponseIf {
-	consentChallenge := ctx.QueryParam("consent_challenge")
-	return c.Consent(ctx, consentChallenge)
+func (d *DemoAPI) GetUserAction(ctx register.Context) register.CrabResponseIf {
+	userId := ctx.Param("id")
+	return d.GetUser(ctx, userId)
 }

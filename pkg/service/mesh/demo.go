@@ -14,17 +14,32 @@
  * limitations under the License.
  */
 
-package v1alpha1
+package mesh
 
 import (
-	"k8s.io/apimachinery/pkg/runtime/schema"
+	"github.com/pkg/errors"
+
+	crabcorev1 "github.com/allenhaozi/crabgo/apis/core/v1"
+	"github.com/allenhaozi/crabgo/pkg/register"
 )
 
-const (
-	Group   = "core.openaios.4pd.io"
-	Version = "v1alpha1"
-)
+type DemoService struct {
+	cfg *register.Config
+}
 
-var (
-	GroupVersion = schema.GroupVersion{Group: Group, Version: Version}
-)
+func NewDemoService(cfg *register.Config) *DemoService {
+	return &DemoService{cfg: cfg}
+}
+
+func (s *DemoService) GetUser(ctx register.Context, userId string) (*crabcorev1.User, error) {
+
+	if len(userId) == 0 {
+		return nil, errors.New("not found user id")
+	}
+
+	user := &crabcorev1.User{}
+	user.Name = "demo"
+	user.UserId = userId
+
+	return user, nil
+}

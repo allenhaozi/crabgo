@@ -27,7 +27,7 @@ import (
 
 	"github.com/allenhaozi/crabgo/apis/common"
 	"github.com/allenhaozi/crabgo/pkg/register"
-	iamapi "github.com/allenhaozi/crabgo/pkg/restapi/api"
+	crabapi "github.com/allenhaozi/crabgo/pkg/restapi/api"
 )
 
 func Setup(cfg *register.Config) map[schema.GroupVersion][]common.RestAPIMeta {
@@ -40,8 +40,7 @@ func Setup(cfg *register.Config) map[schema.GroupVersion][]common.RestAPIMeta {
 	// new rest api setup function should add here for registry
 	//
 	for _, setup := range []func(cfg *register.Config, carrier *sync.Map) (string, []common.RestAPIMeta){
-		iamapi.SetupLoginAPI,
-		iamapi.SetupConsentAPI,
+		crabapi.SetupDemoAPI,
 	} {
 		modKey, modApiList := setup(cfg, &restfulMods)
 
@@ -97,13 +96,13 @@ func patchHandlerFunc(c interface{}, meta *common.RestAPIMeta) *common.RestAPIMe
 
 		if len(respList) == 1 {
 			respIf := respList[0].Interface()
-			if resp, ok := respIf.(*register.IAMResponse); ok {
+			if resp, ok := respIf.(*register.CrabResponse); ok {
 				switch resp.ResponseType {
-				case register.IAMResponseTypeRedirect:
+				case register.CrabResponseTypeRedirect:
 					url, err := resp.GetRedirectURL()
 					// if occur error, return json format error message
 					if err != nil {
-						errInfo.SetData(http.StatusBadRequest, register.IAMResponseTypeJSON, err.Error())
+						errInfo.SetData(http.StatusBadRequest, register.CrabResponseTypeJSON, err.Error())
 						return e.JSON(errInfo.HttpCode, errInfo)
 					}
 					// redirect
@@ -117,7 +116,7 @@ func patchHandlerFunc(c interface{}, meta *common.RestAPIMeta) *common.RestAPIMe
 			}
 		}
 		// error msg uniform json format response
-		errInfo.SetData(http.StatusInternalServerError, register.IAMResponseTypeJSON)
+		errInfo.SetData(http.StatusInternalServerError, register.CrabResponseTypeJSON)
 
 		return e.JSON(
 			errInfo.HttpCode,
