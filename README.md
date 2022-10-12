@@ -2,10 +2,10 @@
 
 
 
-```
+```shell
 
 $ git clone https://github.com/allenhaozi/crabgo.git 
-$ d crabgo/cmd
+$ cd crabgo/cmd
 $ go run main.go
 
 $curl http://127.0.0.1:8080/apis/v1/users/123456
