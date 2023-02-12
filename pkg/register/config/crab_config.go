@@ -1,5 +1,5 @@
 /**
- * Copyright 2021 4Paradigm
+ * Copyright 2021 Crabgo Authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,9 +22,7 @@ import (
 	"github.com/pkg/errors"
 )
 
-var (
-	defaultWebPort = "8080"
-)
+var defaultWebPort = "8080"
 
 type CrabConfig struct {
 	*LogConfig
@@ -41,7 +39,6 @@ func GetCrabConfig() (*CrabConfig, error) {
 }
 
 func (cfg *CrabConfig) initConfig() error {
-
 	// initialize log config
 	cfg.initLogConfig()
 

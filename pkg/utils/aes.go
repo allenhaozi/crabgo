@@ -1,4 +1,4 @@
-// Copyright 2021 4Paradigm
+// Copyright 2021 Crabgo Authors
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -27,8 +27,7 @@ const (
 	ivDefValue = "0102030405060708"
 )
 
-type AESCipher struct {
-}
+type AESCipher struct{}
 
 func (ac AESCipher) RandomKey() ([]byte, error) {
 	key := make([]byte, 32)
@@ -56,7 +55,6 @@ func (ac AESCipher) Encrypt(plaintext []byte, key []byte) ([]byte, error) {
 }
 
 func (ac AESCipher) Decrypt(ciphertext []byte, key []byte) ([]byte, error) {
-
 	block, err := aes.NewCipher(key)
 	if err != nil {
 		return nil, errors.Wrap(err, "invalid decrypt key")

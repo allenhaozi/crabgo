@@ -1,5 +1,5 @@
 /**
- * Copyright 2021 4Paradigm
+ * Copyright 2021 Crabgo Authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -45,9 +45,8 @@ func NewCrabResponse() *CrabResponse {
 	}
 }
 
-//implement interface CrabResponseInf
+// implement interface CrabResponseInf
 func (ir *CrabResponse) SetData(code int, t CrabResponseType, dataList ...interface{}) {
-
 	ir.HttpCode = code
 	ir.ResponseType = t
 
