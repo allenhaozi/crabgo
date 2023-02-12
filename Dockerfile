@@ -1,4 +1,4 @@
-FROM docker.4pd.io/golang:1.16-alpine as builder 
+FROM golang:1.19-alpine as builder 
 
 WORKDIR /build
 
@@ -18,13 +18,13 @@ RUN if [ "$ENABLE_PROXY" = "true" ] ; then go env -w GOPROXY=https://goproxy.cn,
 
 # build
 RUN GO111MODULE=on CGO_ENABLED=0 GOOS=linux GOARCH=${TARGETARCH} \
-	go build -a -ldflags "-s -w" -o openaios-iam-${TARGETARCH} cmd/main.go
+	go build -a -ldflags "-s -w" -o crabgo-${TARGETARCH} cmd/main.go
 
 WORKDIR /dist
-RUN cp /build/openaios-iam-${TARGETARCH} ./openaios-iam-${TARGETARCH}
+RUN cp /build/crabgo-${TARGETARCH} ./crabgo-${TARGETARCH}
 
 
-FROM docker.4pd.io/alpine:3.15.0
+FROM alpine:3.15.0
 
 ARG TARGETARCH=amd64
 
@@ -42,4 +42,4 @@ COPY --from=builder /dist/openaios-iam-${TARGETARCH} /usr/local/bin/openaios-iam
 
 ENTRYPOINT ["entrypoint.sh"]
 
-CMD [ "openaios-iam" ]
+CMD [ "crabgo" ]
