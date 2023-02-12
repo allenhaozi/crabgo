@@ -11,3 +11,4 @@ cmd/start.sh
 .idea/
 cover.out
 .idea
+.vscode
