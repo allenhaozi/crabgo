@@ -1,5 +1,5 @@
 /**
- * Copyright 2021 4Paradigm
+ * Copyright 2021 Crabgo Authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -32,7 +32,6 @@ func NewDemoService(cfg *register.Config) *DemoService {
 }
 
 func (s *DemoService) GetUser(ctx register.Context, userId string) (*crabcorev1.User, error) {
-
 	if len(userId) == 0 {
 		return nil, errors.New("not found user id")
 	}

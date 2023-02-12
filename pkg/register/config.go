@@ -1,5 +1,5 @@
 /**
- * Copyright 2021 4Paradigm
+ * Copyright 2021 Crabgo Authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,8 +22,7 @@ import (
 
 var PConfig *Config
 
-type ExtraConfig struct {
-}
+type ExtraConfig struct{}
 
 type GeneralConfig struct {
 	CrabConfig *config.CrabConfig
@@ -36,11 +35,9 @@ type Config struct {
 }
 
 func NewConfig() (*Config, error) {
-
 	c := &Config{}
 
 	err := c.initConfig()
-
 	if err != nil {
 		return nil, err
 	}

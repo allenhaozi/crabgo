@@ -1,5 +1,5 @@
 /**
- * Copyright 2021 4Paradigm
+ * Copyright 2021 Crabgo Authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -39,8 +39,10 @@ type MysqlConfig struct {
 
 // example : https://pkg.go.dev/github.com/jinzhu/gorm?tab=doc#Open
 // db, err := gorm.Open("mysql", "user:password@/dbname?charset=utf8&parseTime=True&loc=Local")
-var connFormat = "%s:%s@tcp(%s:%s)/%s?%s"
-var connParamsFormat = "charset=utf8&parseTime=True&loc=%s"
+var (
+	connFormat       = "%s:%s@tcp(%s:%s)/%s?%s"
+	connParamsFormat = "charset=utf8&parseTime=True&loc=%s"
+)
 
 func GetMysqlConfig() (*MysqlConfig, error) {
 	var cfg MysqlConfig

@@ -1,5 +1,5 @@
 /**
- * Copyright 2021 4Paradigm
+ * Copyright 2021 Crabgo Authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -48,12 +48,10 @@ func NewCrabError() *CrabError {
 		Message:      errMsgMap[http.StatusOK],
 		Status:       "0",
 	}
-
 }
 
 // implement interface CrabResponseInf
 func (i *CrabError) SetData(code int, t CrabResponseType, dataList ...interface{}) {
-
 	i.ResponseType = t
 
 	if msg, ok := errMsgMap[code]; ok {

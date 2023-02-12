@@ -1,5 +1,5 @@
 /**
- * Copyright 2021 4Paradigm
+ * Copyright 2021 Crabgo Authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -37,7 +37,6 @@ type RestAPIMeta struct {
 }
 
 func (r RestAPIMeta) Gen(gv schema.GroupVersion, apiGroup ApiGroup, mod, m, a, p string) RestAPIMeta {
-
 	r.ApiGroup = apiGroup
 	r.Handler = mod
 	r.Method = m
@@ -50,7 +49,6 @@ func (r RestAPIMeta) Gen(gv schema.GroupVersion, apiGroup ApiGroup, mod, m, a, p
 
 // compose api path
 func (r RestAPIMeta) ApiPath() string {
-
 	if !pRegex.MatchString(r.Path) {
 		r.Path = "/" + r.Path
 	}

@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 4Paradigm
+ * Copyright 2021 Crabgo Authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -31,7 +31,6 @@ import (
 )
 
 func Setup(cfg *register.Config) map[schema.GroupVersion][]common.RestAPIMeta {
-
 	var restfulMods sync.Map
 
 	list := map[schema.GroupVersion][]common.RestAPIMeta{}
@@ -55,8 +54,8 @@ func Setup(cfg *register.Config) map[schema.GroupVersion][]common.RestAPIMeta {
 
 	return list
 }
-func patchHandlerFunc(c interface{}, meta *common.RestAPIMeta) *common.RestAPIMeta {
 
+func patchHandlerFunc(c interface{}, meta *common.RestAPIMeta) *common.RestAPIMeta {
 	meta.HandlerFunc = func(e echo.Context) error {
 		errInfo := register.NewCrabError()
 
